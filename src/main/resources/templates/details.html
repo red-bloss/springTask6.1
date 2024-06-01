@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/mainLayout.html">
+<div class="container" layout:fragment="mainFragment">
+    <div th:if="${!request.isHandled()}">
+        <div class="col-12 text-center">
+            <h5 style="color: red;">*** New Unprocessed Request ***</h5>
+        </div>
+    </div>
+    <div th:if="${request.isHandled()}">
+        <div class="col-12 text-center">
+            <h5 style="color: green;">Processed Request</h5>
+        </div>
+    </div>
+    <div class="row mt-3" >
+        <div class="col-6 position-relative start-50 translate-middle-x">
+            <form method="post" th:action="@{'/saveRequest'}">
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" name="id" th:value="${request.getId()}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" name="user_name" th:value="${request.getUserName()}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Course</label>
+                    <select class="form-select" name="course_name" aria-label="Default select example" disabled>
+                        <option th:value="${request.getCourseName()}" th:text="${request.getCourseName()}" selected></option>
+                        <option>Choose course</option>
+                        <option>Java</option>
+                        <option>Web</option>
+                        <option>Python</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label  class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" name="phone" th:value="${request.getPhone()}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Example textarea</label>
+                    <textarea class="form-control" name="commentary" rows="3" th:text="${request.getCommentary()}" disabled></textarea>
+                </div>
+                <button class="btn btn-success" type="submit">Process the Request</button>
+            </form>
+            <form method="post" th:action="@{'/deleteRequest'}">
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" name="id" th:value="${request.getId()}">
+                </div>
+                <button class="btn btn-danger" type="submit">Delete Application</button>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="/layout/mainLayout.html">
+<div class="container" layout:fragment="mainFragment">
+     <div class="row">
+         <div class="col">
+             <div class="row">
+                 <div class="col-6" th:each="app: ${apps}">
+                     <div class="card mt-3 mb-3">
+                         <div class="card-body">
+                             <div class="card-title" th:if="${!app.isHandled()}">
+                                 <span style="font-weight: bold; color: red; ">*(New)</span>
+                                 <span style="display: inline;" class="inline-block">Request from </span><h5 style="display: inline;" class="card-title" th:text="${app.getUserName()}"></h5>
+                             </div>
+                             <div class="card-title" th:if="${app.isHandled()}">
+                                 <span style="display: inline;" class="inline-block">Request from </span><h5 style="display: inline;" class="card-title" th:text="${app.getUserName()}"></h5>
+                             </div>
+                             <div style="display: flex; align-items: baseline; margin-top: 6px" >
+                                 <p class="text-body-secondary fw-semibold">Course: </p><h6 class="card-text text-body-secondary" th:text="${app.getCourseName()}"></h6>
+                             </div>
+                             <p class="card-text" th:text="${app.getCommentary()}"></p>
+                             <span><b style="display: inline;">Phone:</b></span><p style="display: inline;" class="card-text fw-bold" th:text="${app.getPhone()}"></p>
+                             <a th:href="@{'/details/' + ${app.getId()}}" class="card-link ms-2">Details</a>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+</div>
+</html>
